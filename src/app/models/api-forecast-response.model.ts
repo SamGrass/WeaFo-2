@@ -17,15 +17,12 @@ export class ApiForecastResponse {
   @Type(() => ForecastItem)
   forecastList!: ForecastItem[];
 
-  get forecastsDate() {
+  get currentHour() {
     if (!this.forecastList || !this.city) {
-      return [];
+      return ;
     }
-    return this.forecastList.map(item => {
-      return dayjs.unix(item.dt).utcOffset(this.city.timezone / 60).format('dddd, D MMM')
-    })
+    return dayjs().utcOffset(this.city.timezone / 60).format('HH:mm')
   }
-
 
   get dailyData(): DailyData[] {
     if (!this.forecastList || !this.city) {
