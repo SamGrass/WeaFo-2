@@ -1,2 +1,9 @@
 <p>home works!</p>
-<p>{{ day }}</p>
+<div *ngFor="let forecast of forecastDataList">
+  <div *ngFor="let day of forecast.dailyData">
+    {{ day.date}}
+  </div>
+
+</div>
+
+
