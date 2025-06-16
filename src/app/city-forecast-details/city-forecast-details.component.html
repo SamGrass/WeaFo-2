@@ -1,0 +1,76 @@
+<ng-container *ngIf="cityForecast">
+  <h2 class="mb-3">{{cityForecast.city.name}}</h2>
+  <!--CURRENT TIME CARD-->
+  <div class="card shadow my-4" style="width: fit-content;">
+    <div class="card-body">
+      <h1>{{ cityForecast.currentHour }}</h1>
+      <div class="d-flex align-items-center gap-5">
+        <img class="img-fluid" [src]=" iconBaseUrl + currentForecast.weather[0].icon + '@2x.png'" alt="">
+        <div class="d-flex gap-4">
+          <div>
+            <span
+              [class]="{'text-primary': currentForecast.main.temp < 0, 'text-danger': currentForecast.main.temp >= 0}">{{ currentForecast.main.temp }}°
+            </span>
+            <span style="font-size: 0.75em;">Feels like
+              <span
+                [class]="{'text-primary': currentForecast.main.feels_like < 0, 'text-danger': currentForecast.main.feels_like >= 0}">{{ currentForecast.main.feels_like }}°
+              </span>
+            </span>
+          </div>
+          <div class="text-primary">
+            <i class="fa-solid fa-droplet"></i>
+            <span> {{ currentForecast.pop }}%</span>
+          </div>
+          <div class=" text-center text-primary">
+            <i class="fa-solid fa-umbrella"></i>
+            <span>
+              {{ currentForecast.rain > 0 ? currentForecast.rain + ' mm' : (currentForecast.snow > 0 ? currentForecast.snow + ' mm' : '0 mm') }}
+            </span>
+          </div>
+          <div class="text-success">
+            <i class="fa-solid fa-wind"></i>
+            <span> {{ currentForecast.wind.speed }} m/s </span>
+            <i class="fa-solid fa-arrow-up"
+               [ngStyle]="{'transform': 'rotate(' + currentForecast.wind.deg + 'deg)'}"></i>
+          </div>
+          <span>sunrise: {{ cityForecast.city.formattedSunrise }}</span>
+          <span>sunset: {{ cityForecast.city.formattedSunset }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--DAILY TABLE-->
+  <div class="shadow my-4">
+    <div class="mx pt">
+      <table class="table">
+        <thead>
+        <tr>
+          <th style="width: 20%;"></th>
+          <th class="text-center">Night</th>
+          <th class="text-center">Morning</th>
+          <th class="text-center">Afternoon</th>
+          <th class="text-center">Evening</th>
+          <th class="text-center">Temp min/max</th>
+          <th class="text-center">Wind</th>
+          <th class="text-center">Precipitation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="ms-table-row" *ngFor="let day of cityForecast.dailyData">
+          <!--click to load the day-table component-->
+          <td>{{ day.date }}</td>
+          <td class="text-center"><img class="image" [src]="iconBaseUrl + day.iconPerHour.night + '.png'" alt=""></td>
+          <td class="text-center"><img class="image" [src]="iconBaseUrl + day.iconPerHour.morning + '.png'" alt=""></td>
+          <td class="text-center"><img class="image" [src]="iconBaseUrl + day.iconPerHour.afternoon + '.png'" alt="">
+          </td>
+          <td class="text-center"><img class="image" [src]="iconBaseUrl + day.iconPerHour.evening + '.png'" alt=""></td>
+          <td class="text-center">{{ day.minTemp }}° / {{ day.maxTemp }}°</td>
+          <td class="text-center">{{ day.wind[0].speed }} m/s</td>
+          <td class="text-center">{{ day.sumPrecipitation > 0 ? day.sumPrecipitation.toFixed(1) + ' mm' : '-' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
