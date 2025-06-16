@@ -1,9 +1,6 @@
-<p>home works!</p>
-<div *ngFor="let forecast of forecastDataList">
-  <div *ngFor="let day of forecast.dailyData">
-    {{ day.date}}
-  </div>
-
-</div>
+<ng-container *ngIf="citiesForecastList.length > 0">
+  <h2 class="mb-3">Popular locations</h2>
+  <app-weather-table [forecastList]="citiesForecastList"/>
+</ng-container>
 
 

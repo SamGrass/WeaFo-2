@@ -1,2 +1,17 @@
-<p>weather-table works!</p>
-
+<table class="table">
+  <thead>
+  <tr>
+    <th style="width: 20%;"></th>
+    <th class="text-center" *ngFor="let day of forecastList[0].dailyData | slice:0:4">{{ day.date }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="ms-table-row" *ngFor="let forecast of forecastList" [routerLink]="['/city-forecast/', forecast.city.name] " ng>
+    <th class="align-middle">{{ forecast.city.name }}</th>
+    <td class="text-center" *ngFor="let day of forecast.dailyData | slice:0:4">
+      <img [src]="iconBaseUrl + (day.iconPerHour.afternoon || day.icon) + '.png'" width="48" height="48" alt="">
+      <span class="align-middle">{{ day.avgTemp }}°</span>
+    </td>
+  </tr>
+  </tbody>
+</table>
