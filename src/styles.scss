@@ -7,7 +7,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 :root {
@@ -132,8 +132,10 @@ h2 {
   cursor: pointer;
 }
 
-.table > tbody > tr > td {
+.table > tbody > tr > td,
+.table > thead > tr > th {
   vertical-align: middle;
+  text-align: center;
 }
 
 .table {
