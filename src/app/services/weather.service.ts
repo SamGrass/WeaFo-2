@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
 import {ApiForecastResponse} from "../models/api-forecast-response.model";
-import {plainToInstance} from "class-transformer";
+import {plainToClassFromExist, plainToInstance} from "class-transformer";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,9 @@ export class WeatherService {
 
   async getForecastFromCityName(cityName: string): Promise<ApiForecastResponse> {
     const plainObj = await firstValueFrom(this.http.get(`${this.baseUrl}data/2.5/forecast?q=${cityName}&units=metric&appid=${this.apiKey}`));
-    return plainToInstance(ApiForecastResponse, plainObj);
+    const newInstance = plainToClassFromExist(new ApiForecastResponse, plainObj);
+    newInstance.convertForecastHourWithOffset();
+    newInstance.getDailyForecastList()
+    return newInstance;
   }
 }
