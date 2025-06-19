@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ dailyForecastList.day }}</h4>
+  <button (click)="activeModal.dismiss('Cross click')" aria-label="Close" class="btn-close" type="button"></button>
+</div>
+<div class="modal-body">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Hour</th>
+      <th>Weather</th>
+      <th>Temp</th>
+      <th>Felt</th>
+      <th>Humidity</th>
+      <th>Precipitation</th>
+      <th>Prec. probability</th>
+      <th>Wind</th>
+    </tr>
+    </thead>
+    <tbody class="ms-remove-border">
+    <tr *ngFor="let forecast of dailyForecastList.forecastItems">
+      <td>{{ forecast.hour }}</td>
+      <td><img [src]="forecast.iconUrl" alt=""></td>
+      <td>{{ forecast.main.temp | number: '1.0-1' }} &deg;C</td>
+      <td>{{ forecast.main.feels_like | number: '1.0-1' }} &deg;C</td>
+      <td>{{ forecast.main.humidity }}%</td>
+      <td>{{ forecast.rainAmount > 0 ? forecast.rainAmount + ' mm' : (forecast.snowAmount > 0 ? forecast.snowAmount + ' mm' : '-') }}</td>
+      <td>{{ forecast.pop | percent }}</td>
+      <td>
+        <span> {{ forecast.wind.speed | number: '1.0-1' }} m/s </span>
+        <i [ngStyle]="{'transform': 'rotate(' + forecast.wind.deg + 'deg)'}" class="fa-solid fa-arrow-up"></i>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+  <button (click)="activeModal.close('Close click')" class="btn btn-outline-secondary" type="button">Close</button>
+</div>
+
