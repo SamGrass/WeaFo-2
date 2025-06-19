@@ -2,15 +2,15 @@
   <thead>
   <tr>
     <th style="width: 20%;"></th>
-    <th class="text-center" *ngFor="let day of forecastList[0].dailyData | slice:0:4">{{ day.date }}</th>
+    <th  *ngFor="let day of citiesForecastList[0].dailyForecastList | slice:0:4">{{ day.day }}</th>
   </tr>
   </thead>
   <tbody>
-  <tr class="ms-table-row" *ngFor="let forecast of forecastList" [routerLink]="['/city-forecast/', forecast.city.name] " ng>
+  <tr class="ms-table-row" *ngFor="let forecast of citiesForecastList" [routerLink]="['/city-forecast/', forecast.city.name] ">
     <th class="align-middle">{{ forecast.city.name }}</th>
-    <td class="text-center" *ngFor="let day of forecast.dailyData | slice:0:4">
-      <img [src]="iconBaseUrl + (day.iconPerHour.afternoon || day.icon) + '.png'" width="48" height="48" alt="">
-      <span class="align-middle">{{ day.avgTemp }}°</span>
+    <td  *ngFor="let day of forecast.dailyForecastList | slice:0:4">
+      <img [src]="day.afternoonIconUrl || day.forecastItems[0].iconUrl" width="48" height="48" alt="">
+      <span class="align-middle">{{ day.avgTemp | number: '1.0-0'}}°</span>
     </td>
   </tr>
   </tbody>
