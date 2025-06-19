@@ -21,6 +21,8 @@ class WindData {
 
 export class ForecastItem {
   dt!: number;
+  hour!: string;
+  pop!: number;
 
   @Type(() => MainData)
   main!: MainData;
@@ -31,14 +33,28 @@ export class ForecastItem {
   @Type(() => WindData)
   wind!: WindData;
 
-  pop!: number;
+  @Expose()
+  rain?: {
+    '3h': number;
+  };
 
   @Expose()
-  @Transform(({ obj }) => obj.rain ? obj.rain['3h'] : 0)
-  rain!: number;
+  snow?: {
+    '3h': number;
+  };
 
   @Expose()
-  @Transform(({ obj }) => obj.snow ? obj.snow['3h'] : 0)
-  snow!: number;
+  get rainAmount(): number {
+    return (this.rain && typeof this.rain['3h'] === 'number') ? this.rain['3h'] : 0;
+  }
+
+  @Expose()
+  get snowAmount(): number {
+    return (this.snow && typeof this.snow['3h'] === 'number') ? this.snow['3h'] : 0;
+  }
+
+  get iconUrl(): string {
+    return `https://openweathermap.org/img/wn/${this.weather[0].icon}.png`
+  }
 
 }
