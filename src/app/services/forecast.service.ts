@@ -7,7 +7,7 @@ import {plainToClassFromExist, plainToInstance} from "class-transformer";
 @Injectable({
   providedIn: 'root'
 })
-export class WeatherService {
+export class ForecastService {
   private apiKey = '4cd6fd8911f6e75c9afc398da4ee0de5';
   private baseUrl = 'https://api.openweathermap.org/';
   private readonly http = inject(HttpClient)
